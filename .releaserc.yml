@@ -1,0 +1,6 @@
+plugins:
+  - "@semantic-release/release-notes-generator"
+  - "@semantic-release/changelog"
+  - "@semantic-release/git"
+#repositoryUrl: git@github.com:MarcMogdanz/nest-xray.git
+#branches: [{ "name": "enable-semantic-releases", "release": true }]
