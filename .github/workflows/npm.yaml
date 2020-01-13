@@ -1,0 +1,41 @@
+name: npm Publishing
+
+#on:
+#  release:
+#    types: [created]
+
+on: [push]
+
+jobs:
+  #  build:
+  #    runs-on: ubuntu-latest
+  #    steps:
+  #      - uses: actions/checkout@v2
+  #      - uses: actions/setup-node@v1
+  #        with:
+  #          node-version: 12
+  #      - run: npm ci
+  #      - run: npm test
+
+  publish-npm:
+    #needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+          registry-url: https://registry.npmjs.org/
+
+      - run: npm ci
+
+      - run: npm run build
+
+      # Tells the registry whether this package should be published as public or restricted.
+      # Only applies to scoped packages, which default to restricted. If you don’t have a paid account, you must publish with --access public to publish scoped packages.
+      # https://docs.npmjs.com/cli/publish#description
+      - run: npm publish --access public --dry-run
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
